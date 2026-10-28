@@ -1,0 +1,11 @@
+{
+  "name": "mini-sheet",
+  "version": "1.0.0",
+  "description": "A small browser spreadsheet with its own formula engine, dependency-ordered recalculation, undo/redo and CSV import/export.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

@@ -37,7 +37,7 @@ function trimmed(n, max, sep) {
 
 /**
  * Display text of a value in a format and UI language.
- * English: 1,234.56 and 12.5%; Turkish: 1.234,56 and %12,5.
+ * English: 1,234.56 and 12.50%; Turkish: 1.234,56 and %12,50.
  * @param {import('./values.js').Value} value
  * @param {string} [format]  one of FORMATS
  * @param {'en'|'tr'} [lang]
@@ -53,7 +53,7 @@ export function formatValue(value, format = 'general', lang = 'en') {
   const abs = Math.abs(value);
   let body;
   if (format === 'percent') {
-    const digits = trimmed(abs * 100, 2, sep);
+    const digits = fixed(abs * 100, 2, false, sep);
     body = lang === 'tr' ? `%${digits}` : `${digits}%`;
   } else {
     body = fixed(abs, 2, format === 'thousands', sep);

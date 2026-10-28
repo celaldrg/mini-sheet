@@ -8,6 +8,9 @@ const LONG_PRESS_MS = 500;
 const TAP_SLOP = 10;
 const EDGE_SCROLL = 28;
 const ROW_HEAD_WIDTH = 44;
+/** Column widths are drawn smaller on phones so more columns fit. */
+const NARROW_QUERY = '(max-width: 480px)';
+const NARROW_SCALE = 0.8;
 
 /**
  * @typedef {import('./refs.js').Range} Range
@@ -61,8 +64,16 @@ export class GridView {
     this.editor.type = 'text';
     this.editor.autocomplete = 'off';
     this.editor.spellcheck = false;
+    this.widths = [];
+    this.narrow = window.matchMedia(NARROW_QUERY);
+    this.narrow.addEventListener('change', () => this.setWidths(this.widths));
     this.build();
     this.bindPointer();
+  }
+
+  /** Display scale for column widths (stored widths stay unscaled). */
+  get scale() {
+    return this.narrow.matches ? NARROW_SCALE : 1;
   }
 
   // ---- building -----------------------------------------------------------
@@ -153,10 +164,12 @@ export class GridView {
    * @param {number[]} widths
    */
   setWidths(widths) {
+    this.widths = widths;
     let total = ROW_HEAD_WIDTH;
     widths.forEach((w, i) => {
-      this.cols[i].style.width = `${w}px`;
-      total += w;
+      const shown = Math.round(w * this.scale);
+      this.cols[i].style.width = `${shown}px`;
+      total += shown;
     });
     this.table.style.width = `${total}px`;
   }
@@ -340,7 +353,7 @@ export class GridView {
     this.track(e, (ev) => {
       width = Math.max(40, Math.min(400, startW + ev.clientX - startX));
       this.cols[c].style.width = `${width}px`;
-    }, () => this.on.resize(c, width));
+    }, () => this.on.resize(c, Math.round(width / this.scale)));
   }
 
   startFill(e) {

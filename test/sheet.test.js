@@ -54,8 +54,11 @@ test('number formats use the UI language separators', () => {
   assert.equal(formatValue(1234.5, 'thousands', 'tr'), '1.234,50');
   assert.equal(formatValue(1234567.891, 'thousands', 'en'), '1,234,567.89');
   assert.equal(formatValue(-1234.5, 'fixed2', 'en'), '-1234.50');
-  assert.equal(formatValue(0.125, 'percent', 'en'), '12.5%');
-  assert.equal(formatValue(0.125, 'percent', 'tr'), '%12,5');
+  assert.equal(formatValue(0.125, 'percent', 'en'), '12.50%');
+  assert.equal(formatValue(1, 'percent', 'en'), '100.00%');
+  assert.equal(formatValue(0.066, 'percent', 'en'), '6.60%');
+  assert.equal(formatValue(-0.00001, 'percent', 'en'), '0.00%');
+  assert.equal(formatValue(0.125, 'percent', 'tr'), '%12,50');
   assert.equal(formatValue(-0.001, 'fixed2', 'en'), '0.00');
   assert.equal(formatValue(0.1 + 0.2, 'general', 'en'), '0.3');
   assert.equal(formatValue(2.5, 'general', 'tr'), '2,5');

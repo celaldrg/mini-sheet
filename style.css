@@ -379,6 +379,10 @@ body { overflow: hidden; }
   .statusbar { font-size: 12px; }
 }
 
+@media (max-width: 480px) {
+  .grid th, .grid td { padding: 0 4px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
